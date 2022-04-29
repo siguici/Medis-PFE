@@ -1,0 +1,43 @@
+#!/usr/bin/env php
+<?php
+
+if ($argc > 1) {
+    array_shift($argv);
+    $args = $argv;
+}
+else {
+    $args = ['templates'];
+}
+
+foreach ($args as $arg) {
+    if (file_exists($path = $arg) || file_exists($path = getcwd() . DIRECTORY_SEPARATOR . $arg)) {
+        twigify($path);
+    }
+}
+
+function twigify(string $path) {
+    is_dir($path) ? twigify_dir($path) : twigify_file($path);
+}
+
+function twigify_dir(string $dir) {
+    if (is_dir($dir)) {
+        $dir = realpath($dir);
+    
+        foreach (@scandir($dir) as $name) {
+            if (!str_starts_with($name, '.')) {
+                twigify($dir . DIRECTORY_SEPARATOR . $name);
+            }
+        }
+    }
+}
+
+function twigify_file(string $file) {
+    if (is_file($file)) {
+        if (!str_ends_with($file, '.html.twig')) {
+            $name = str_ends_with($file, '.html') ? "$file.twig" : "$file.html.twig";
+            echo "Renaming $file to $name" . PHP_EOL;
+            rename($file, $name);
+            echo "$file renamed to $name" . PHP_EOL;
+        }
+    }
+}
