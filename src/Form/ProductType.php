@@ -12,12 +12,72 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('image')
-            ->add('price')
-            ->add('sale')
-            ->add('description')
-            ->add('category')
+            ->add('name', options: [
+                'row_attr' => [
+                    'class' => 'form-group',
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'label_attr' => [
+                    'class' => 'col-form-label',
+                ],
+            ])
+            ->add('image', options: [
+                'row_attr' => [
+                    'class' => 'form-group',
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'label_attr' => [
+                    'class' => 'col-form-label',
+                ],
+            ])
+            ->add('price', options: [
+                'row_attr' => [
+                    'class' => 'form-group',
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'label_attr' => [
+                    'class' => 'col-form-label',
+                ],
+            ])
+            ->add('sale', options: [
+                'row_attr' => [
+                    'class' => 'form-group',
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'label_attr' => [
+                    'class' => 'col-form-label',
+                ],
+            ])
+            ->add('description', options: [
+                'row_attr' => [
+                    'class' => 'form-group',
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'label_attr' => [
+                    'class' => 'col-form-label',
+                ],
+            ])
+            ->add('category', options: [
+                'row_attr' => [
+                    'class' => 'form-group',
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'label_attr' => [
+                    'class' => 'col-form-label',
+                ],
+            ])
         ;
     }
 
