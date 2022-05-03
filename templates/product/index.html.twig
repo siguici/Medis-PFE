@@ -25,7 +25,11 @@
             <tr>
                 <td>{{ product.id }}</td>
                 <td>{{ product.name }}</td>
-                <td>{{ product.category }}</td>
+                {% if product.category %}
+                <td><a href="{{ path('app_category_show', {'id': product.category.id}) }}">{{ product.category }}</a></td>
+                {% else %}
+                <td></td>
+                {% endif %}
                 <td>{{ product.price }}</td>
                 <td>{{ product.sale }}</td>
                 <td>
