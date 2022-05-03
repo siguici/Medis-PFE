@@ -6,12 +6,10 @@
 <div class="container-fluid px-4">
     <h1 class="mt-4">New product</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="{{ url('app_product_index') }}">Product</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_product_index') }}">Product</a></li>
         <li class="breadcrumb-item active">New</li>
     </ol>
 
     {{ include('product/_form.html.twig') }}
-
-    <a href="{{ path('app_product_index') }}">back to list</a>
 </div>
 {% endblock %}
