@@ -3,9 +3,15 @@
 {% block title %}New Category{% endblock %}
 
 {% block content %}
-    <h1>Create new Category</h1>
+<div class="container-fluid px-4">
+    <h1 class="mt-4">New category</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ url('app_category_index') }}">Category</a></li>
+        <li class="breadcrumb-item active">New</li>
+    </ol>
 
     {{ include('category/_form.html.twig') }}
 
     <a href="{{ path('app_category_index') }}">back to list</a>
+</div>
 {% endblock %}
