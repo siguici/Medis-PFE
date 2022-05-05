@@ -47,6 +47,14 @@ class ProductController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/details', name: 'app_product_details', methods: ['GET'])]
+    public function details(Product $product): Response
+    {
+        return $this->render('product/details.html.twig', [
+            'product' => $product,
+        ]);
+    }
+
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
     {
