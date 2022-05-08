@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<section class="login-form" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+    <div class="container">
+        <h1 class="text-center">Login</h1>
+
+        {{ form_start(loginForm) }}
+            {{ form_row(loginForm.username) }}
+            {{ form_row(loginForm.password, {
+                label: 'Password'
+            }) }}
+
+            <button type="submit" class="btn btn-primary my-3">Login</button>
+            <a href="{{ url('register') }}">Not register yet?</a>
+        {{ form_end(loginForm) }}
+    </div>
+</section>
+{% endblock %}
