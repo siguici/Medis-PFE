@@ -3,15 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -21,23 +17,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $email;
-    
-    // #[ORM\Column(type: 'json')]
-    // private $roles = [];
+
+    #[ORM\Column(type: 'json')]
+    private $roles = [];
 
     #[ORM\Column(type: 'string')]
     private $password;
-
-    #[ORM\ManyToMany(targetEntity: Role::class, inversedBy: 'users')]
-    private $roles;
-
-    #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
-
-    public function __construct()
-    {
-        $this->resetRoles();
-    }
 
     public function getId(): ?int
     {
@@ -74,51 +59,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return (string) $this->email;
     }
 
-    public function resetRoles(): self {
-        $this->roles = new ArrayCollection();
-        
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Role>
+     * @see UserInterface
      */
-    public function getRoles(): Collection
+    public function getRoles(): array
     {
         $roles = $this->roles;
-        //$roles[] = new UserRole();
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
 
-        return $roles;
+        return array_unique($roles);
     }
 
-    public function setRoles(array|Collection $roles): self
+    public function setRoles(array $roles): self
     {
-        $this->resetRoles();
-        $this->addRoles($roles);
-
-        return $this;
-    }
-
-    public function addRoles(array|Collection $roles): self {
-        foreach ($roles as $role) {
-            $this->addRole($role);
-        }
-
-        return $this;
-    }
-
-    public function addRole(Role $role): self
-    {
-        if (!$this->roles->contains($role)) {
-            $this->roles[] = $role;
-        }
-
-        return $this;
-    }
-
-    public function removeRole(Role $role): self
-    {
-        $this->roles->removeElement($role);
+        $this->roles = $roles;
 
         return $this;
     }
@@ -156,17 +111,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
     }
 }
