@@ -26,6 +26,12 @@ security:
                 # "login" is the name of the route created previously
                 login_path: login
                 check_path: login
+                username_parameter: "login[username]"
+                password_parameter: "login[password]"
+            
+            logout:
+                path: logout
+                target: login
         
         secured_area:
             # ...
