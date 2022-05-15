@@ -1,8 +1,9 @@
-{% extends 'admin.html.twig' %}
+{% extends 'grant.html.twig' %}
 
 {% block title %}Product index{% endblock %}
 
 {% block content %}
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 <div class="container-fluid px-4">
     <h1 class="mt-4">Products list</h1>
     <ol class="breadcrumb mb-4">
@@ -47,4 +48,55 @@
 
     <a class="btn btn-primary mt-3" href="{{ path('app_product_new') }}">Create new</a>
 </div>
+
+{% else %}
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for product in products %}
+            <div class="col mb-5">
+                <div class="card h-100">
+                    {% if product.sale %}
+                    <!-- Sale badge-->
+                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                    {% endif %}
+                    <!-- Product image-->
+                    <img class="card-img-top" width="100px" src="{{ product.image }}" alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{ product.name }}</h5>
+                            
+                            <!-- Product reviews-->
+                            <div class="d-flex justify-content-center small text-warning mb-2">
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                            </div>
+                            
+                            <!-- Product price-->
+                            {{ product.price }}
+                            
+                            {% if product.sale %}
+                            <!-- Product price-->
+                            <span class="text-muted text-decoration-line-through">{{ product.sale }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer d-flex flex-row px-2 pt-0 pb-4 .justify-content-center border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mx-1" href="{{ path('app_product_details', {'id': product.id}) }}">View options</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mx-1" href="#">Add to cart</a></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
 {% endblock %}

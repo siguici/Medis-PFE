@@ -25,6 +25,7 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
             'products' => $productRepository->findAll(),
             'quantity' => $session->get('quantity'),
+            'user' => $this->getUser(),
         ]);
     }
 }

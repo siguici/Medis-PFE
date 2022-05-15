@@ -53,6 +53,17 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
+        # matches /admin/users/*
+        - { path: '^/product/new', roles: ROLE_SUPER_ADMIN }
+        - { path: '^/product/update', roles: ROLE_SUPER_ADMIN }
+        - { path: '^/product/delete', roles: ROLE_SUPER_ADMIN }
+        - { path: '^/category/new', roles: ROLE_SUPER_ADMIN }
+        - { path: '^/category/update', roles: ROLE_SUPER_ADMIN }
+        - { path: '^/category/delete', roles: ROLE_SUPER_ADMIN }
+
+        # matches /admin/* except for anything matching the above rule
+        - { path: '^/dashboard', roles: ROLE_ADMIN }
+
 when@test:
     security:
         password_hashers:

@@ -1,183 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <base href="/"/>
 
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>{% block title %}Medis{% endblock %}</title>
+        <meta content="{% block description %}Welcome to Medis{% endblock %}" name="description">
+        <meta content="{% block keywords %}medis, home, welcome{% endblock %}" name="keywords">
+        <meta name="author" content="Youssef Ghoul" />
 
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+        {% block favicons %}
+        <!-- Favicons -->
+        <link href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>" rel="icon">
+        <link href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>" rel="apple-touch-icon">
+        {% endblock %}
 
-    <!-- Favicons -->
-    <link href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>" rel="icon">
-    <link href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>" rel="apple-touch-icon">
+        {% block fonts %}
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+        {% endblock %}
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
-
-    {% block stylesheets %}
+        {% block stylesheets %}
+        <!-- Vendor CSS Files -->
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        {% else %}
+        <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+        <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+        <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+        <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+        <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+        <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+        {% endif %}
+        <!-- Template Main CSS File -->
+        <link href="assets/css/style.css" rel="stylesheet">
         {{ encore_entry_link_tags('app') }}
-    {% endblock %}
-</head>
+        {% endblock %}
+        {% block head %}{% endblock %}
+    </head>
 
-<body>
+    <body {% if is_granted('IS_AUTHENTICATED_FULLY') %} class="sb-nav-fixed" {% endif %}>
+        {% block body %}{% endblock %}
 
-    <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top d-flex align-items-center {{ header_classes|default('') }}">
-        <div class="container d-flex justify-content-between align-items-center">
-
-        <div class="logo">
-            <h1 class="text-light"><a href="{{ url('home') }}"><span>{{ env("APP_NAME") }}</span></a></h1>
-            {# <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> #}
-        </div>
-
-        <nav id="navbar" class="navbar">
-            <ul>
-                <li><a class="active" href="{{ url('home') }}">Home</a></li>
-                <li><a href="{{ url('about') }}">About</a></li>
-                <li class="dropdown"><a href="#"><span>Products</span> <i class="bi bi-chevron-down"></i></a>
-                    <ul>
-                        <li><a class="dropdown-item" href="{{ url('app_product_index') }}">All Products</a></li>
-                        <li class="dropdown"><a href="#"><span>Categories</span> <i class="bi bi-chevron-right"></i></a>
-                            <ul>
-                            <li><a href="#">Deep Drop Down 1</a></li>
-                            <li><a href="#">Deep Drop Down 2</a></li>
-                            <li><a href="#">Deep Drop Down 3</a></li>
-                            <li><a href="#">Deep Drop Down 4</a></li>
-                            <li><a href="#">Deep Drop Down 5</a></li>
-                            </ul>
-                        </li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                    </ul>
-                </li>
-                <li><a href="{{ url('contact') }}">Contact Us</a></li>
-            </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav><!-- .navbar -->
-        <form class="d-flex">
-            <button class="btn btn-outline-light" type="submit">
-                <i class="bi-cart-fill me-1"></i>
-                Cart
-                <span class="badge bg-light text-dark ms-1 rounded-pill">0</span>
-            </button>
-        </form>
-        <aside class="mt-3">
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="{{ url('register') }}" class="btn btn-primary">Register</a></li>
-                <li class="list-inline-item"><a href="{{ url('login') }}" class="btn btn-secondary">Login</a></li>
-            </ul>
-        </aside>
-
-        </div>
-    </header><!-- End Header -->
-
-    {% block hero %}{% endblock %}
-
-    <main id="main">{% block content %}{% endblock %}</main><!-- End #main -->
-
-    <!-- ======= Footer ======= -->
-    <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
-
-        <div class="footer-newsletter">
-        <div class="container">
-            <div class="row">
-            <div class="col-lg-6">
-                <h4>Our Newsletter</h4>
-                <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            </div>
-            <div class="col-lg-6">
-                <form action="" method="post">
-                <input type="email" name="email"><input type="submit" value="Subscribe">
-                </form>
-            </div>
-            </div>
-        </div>
-        </div>
-
-        <div class="footer-top">
-        <div class="container">
-            <div class="row">
-
-            <div class="col-lg-3 col-md-6 footer-links">
-                <h4>Useful Links</h4>
-                <ul>
-                <li><i class="bx bx-chevron-right"></i> <a href="{{ url('home') }}">Home</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="{{ url('about') }}">About us</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-                </ul>
-            </div>
-
-            <div class="col-lg-3 col-md-6 footer-contact">
-                <h4>Contact Us</h4>
-                <p>
-                Ain Kmicha<br>
-                Nabeul<br>
-                Tunisia <br><br>
-                <strong>Phone:</strong> <a href="tel:21620422701">+216 20 422 701</a><br>
-                <strong>Email:</strong> <a href="mailto:youssefzyus33@gmail.com">youssefzyus33@gmail.com</a><br>
-                </p>
-
-            </div>
-
-            <div class="col-lg-3 col-md-6 footer-info">
-                <h3>About {{ env("APP_NAME") }}</h3>
-                <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
-                <div class="social-links mt-3">
-                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-                </div>
-            </div>
-
-            </div>
-        </div>
-        </div>
-
-        <div class="container">
-        <div class="copyright">
-            &copy; Copyright <strong><span>{{ env("APP_NAME") }}</span></strong>. All Rights Reserved
-        </div>
-        <div class="credits">
-            Designed by <a href="https://github.com/Zyus1">Zyus</a>
-        </div>
-        </div>
-    </footer><!-- End Footer -->
-
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/purecounter/purecounter.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-
-    <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
-    {% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
-    {% endblock %}
-
-</body>
-
+        {% block javascripts %}
+        <!-- Vendor JS Files -->
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/scripts.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="{{ asset('demo/chart-area-demo.js') }}"></script>
+        <script src="{{ asset('demo/chart-bar-demo.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
+        {% else %}
+        <script src="assets/vendor/purecounter/purecounter.js"></script>
+        <script src="assets/vendor/aos/aos.js"></script>
+        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+        <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+        <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+        <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+        <script src="assets/vendor/php-email-form/validate.js"></script>
+        {% endif %}
+        <!-- Template Main JS File -->
+        <script src="assets/js/main.js"></script>
+        {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </body>
 </html>
